@@ -1,0 +1,8 @@
+{
+  "name": "PulseNutri — Singapore Sports Nutrition & Automated Recovery Ecosystem",
+  "description": "Singapore's unified sports nutrition and automated recovery ecosystem. Fresh dietitian-crafted recovery meals, ActiveSG court auto-booking bots, and smart thermal dispensing kiosks.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

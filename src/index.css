@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #fcf8fb;
+  --color-surface-dim: #dcd9dc;
+  --color-surface-bright: #fcf8fb;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f6f3f5;
+  --color-surface-container: #f0edef;
+  --color-surface-container-high: #eae7ea;
+  --color-surface-container-highest: #e4e2e4;
+  --color-on-surface: #1b1b1d;
+  --color-on-surface-variant: #414753;
+  --color-inverse-surface: #303032;
+  --color-inverse-on-surface: #f3f0f2;
+  --color-outline: #717785;
+  --color-outline-variant: #c1c6d6;
+  --color-surface-tint: #005cbb;
+  --color-primary: #0059b5;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #0071e3;
+  --color-on-primary-container: #fcfbff;
+  --color-inverse-primary: #abc7ff;
+  --color-secondary: #006e28;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #6ffb85;
+  --color-on-secondary-container: #00732a;
+  --color-tertiary: #884d00;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #ab6200;
+  --color-on-tertiary-container: #fffaf9;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+  --color-primary-fixed: #d7e2ff;
+  --color-primary-fixed-dim: #abc7ff;
+  --color-on-primary-fixed: #001b3f;
+  --color-on-primary-fixed-variant: #00458f;
+  --color-secondary-fixed: #72fe88;
+  --color-secondary-fixed-dim: #53e16f;
+  --color-on-secondary-fixed: #002107;
+  --color-on-secondary-fixed-variant: #00531c;
+  --color-tertiary-fixed: #ffdcbf;
+  --color-tertiary-fixed-dim: #ffb874;
+  --color-on-tertiary-fixed: #2d1600;
+  --color-on-tertiary-fixed-variant: #6a3b00;
+  --color-background: #fcf8fb;
+  --color-on-background: #1b1b1d;
+  --color-surface-variant: #e4e2e4;
+
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.25rem;
+  --spacing-space-2xl: 3.5rem;
+  --spacing-margin: 1.5rem;
+  --spacing-margin-mobile: 1rem;
+  --spacing-margin-desktop: 2.5rem;
+  --spacing-gutter: 1.25rem;
+  --spacing-gutter-mobile: 0.75rem;
+  --spacing-gutter-desktop: 1.5rem;
+}
+
+@layer utilities {
+  .text-display-hero {
+    font-size: 56px;
+    line-height: 64px;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+  }
+  .text-display-hero-mobile {
+    font-size: 40px;
+    line-height: 46px;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+  }
+  .text-headline-xl {
+    font-size: 36px;
+    line-height: 44px;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+  }
+  .text-headline-lg {
+    font-size: 28px;
+    line-height: 34px;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+  .text-headline-md {
+    font-size: 22px;
+    line-height: 28px;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+  }
+  .text-headline-sm {
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+  .text-body-lg {
+    font-size: 17px;
+    line-height: 24px;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+  }
+  .text-body-md {
+    font-size: 15px;
+    line-height: 21px;
+    letter-spacing: -0.005em;
+    font-weight: 400;
+  }
+  .text-body-sm {
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 0em;
+    font-weight: 400;
+  }
+  .text-label-caps {
+    font-size: 11px;
+    line-height: 14px;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  .text-label-md {
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.005em;
+    font-weight: 500;
+  }
+  .text-label-sm {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0em;
+    font-weight: 500;
+  }
+  .text-stat-numeric {
+    font-size: 32px;
+    line-height: 36px;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rounded-DEFAULT {
+    border-radius: 1rem;
+  }
+  .rounded-lg {
+    border-radius: 2rem;
+  }
+  .rounded-xl {
+    border-radius: 3rem;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
