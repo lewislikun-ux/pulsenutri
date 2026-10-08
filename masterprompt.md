@@ -1,75 +1,59 @@
-# PulseNutri Master Prompt & Product Specification
+ROLE: You are a senior full-stack engineer building and maintaining PulseNutri, a production-grade Singapore Sports Nutrition & Automated Recovery Ecosystem built on Vite + React 19 + TypeScript + Express + Tailwind CSS v4.
 
-## 1. Project Overview & Identity
-- **Application Name**: PulseNutri — Singapore Sports Nutrition & Automated Recovery Ecosystem
-- **Ecosystem Focus**: Singapore national sports nutrition, automated physical recovery, ActiveSG venue integration, OneMap geospatial routing, and dual-zone IoT smart vending dispensers.
-- **Brand Aesthetic**: Cupertino / Apple-inspired precision industrial design. Atmospheric glassmorphism (`backdrop-blur-xl`), squircle bento containers, hairline borders (`1px solid rgba(0,0,0,0.06)`), and high typographic hierarchy.
+GOAL: Deliver an integrated sports nutrition, physical recovery, and venue reservation platform tailored to Singapore's active lifestyle and public wellness infrastructure (ActiveSG, OneMap GIS, SFA cloud kitchens, Health Promotion Board Nutri-Grade targets), linked to the Smithery MCP gateway.
+ 1) api/health.js—accepts GET/POST requests, monitors and reports the real-time connectivity, latency, HTTP status, and tool capabilities of the external Smithery MCP server (https://mcp.smithery.ai/lewislikun) without leaking private keys or credentials.
+ 2) api/mcp.js—serves as an MCP tool proxy exposing core ecosystem capabilities (activesg_book_court, calculate_recovery_macros, dispenser_claim_locker) for autonomous agents and client interactions.
+ 3) Interactive UI Screens matching the Cupertino industrial design language:
+    - Overview: Live biometric hero telemetry, 4-pillar bento showcase, interactive post-workout recovery calculator with map preview, membership tiers (Community S$0, Athlete S$89, Academy S$1,000), and island-wide pod locator.
+    - Nutrition & Meals: SFA Grade-A recovery meal bento (Sous-vide Salmon, Citrus Herb Chicken, Tempeh Quinoa Bowl, Warm Bone Broth Congee), dietary category filters, macro donut charts, "Snap & Calculate" AI computer vision food viewfinder with live bounding boxes, and first-experience promo voucher redemption (PULSE-FIRST-SG).
+    - Sports Venues: Interactive OneMap Singapore GIS map canvas with venue pins (Clementi, Bishan, Jurong East, Kallang), real-time court availability drawers, on-site Smart Dispenser stock counters, community sparring & AHPC physio bookings, and an Autonomous Court Booking Bot console with instant arming state feedback.
+    - Smart Dispensers: Dual-zone IoT temperature telemetry (Cryo 4°C, Thermal 65°C), 48 island-wide ActiveSG pods directory, live MCP connection status, and NFC/QR pod unlatch simulation with a 15-second safety timer.
+    - For Partners: BCM four-pillar circular revenue model (Consumer Subscriptions, Cloud Kitchen Commissions, Therapist/Nutritionist Cut, Venue Booking Fees), stakeholder bento cards, and a functional 3-step partner inquiry pipeline.
+    - Interactive Modals: Smithery MCP Status Inspector, NFC Locker Unlatch, Meal Reservation with pickup passcode, and Singpass/MyActiveSG Get Started onboarding.
 
----
+OUTPUT: Write the handlers and full-stack integration in the two shapes this toolchain needs.
+ (a) Standalone handlers at api/health.js and api/mcp.js in the PROJECT ROOT, siblings of package.json and never inside src/. This is the form serverless/Vercel environments run.
+ (b) The same routes registered as Express routes in server.ts at the project root (dev: tsx server.ts), mounting healthHandler and mcpProxyHandler at app.all('/api/health.js', '/api/health') and app.all('/api/mcp.js', '/api/mcp'), while hosting the Vite middleware in development and serving static dist in production.
+ Make sure package.json contains "type": "module" and scripts with "dev": "tsx server.ts" and "start": "tsx server.ts".
+ Set cache and security headers properly. Guard against network timeouts when querying external MCP servers (using AbortController with 4000ms timeout) and treat HTTP 200..499 responses as proof of host reachability.
+ In the footer, include compliance and integration notes aligned with the Singapore Health Promotion Board (HPB), Singapore Food Agency (SFA), ActiveSG guidelines, and PDPA privacy standards.
 
-## 2. Core Functional Pillars & Screens
+GUARDRAILS:
+ - Never write API keys, GitHub Personal Access Tokens, or private secrets into any file, comment, or markdown log.
+ - Never expose backend tokens or credentials to browser code via VITE_ variables.
+ - All external MCP/telemetry calls happen through server-side /api/ routes.
+ - Maintain strict Cupertino / Apple typographic hierarchy: Inter with negative tracking on headlines, tabular numerals (tabular-nums) for all biometric metrics, and zero-pill discipline for static metadata.
+ - Every button, tab, modal, and drawer must have a working interactive handler; no dead clicks or static mockups.
+ - Keep /build/error.md and logs.md updated and synchronized with every git push to origin/main.
 
-### A. Overview Screen (`#overview`)
-- **Hero & Live Telemetry**: Dynamic headline ("Peak performance meets intelligent recovery"), operational badge indicating real-time ActiveSG & Singpass synchronization.
-- **Hero Bento Showcase**:
-  - Real-Time Meal Macro Engine (Teriyaki Salmon Recovery, visual scan accuracy 99.4%, 450 kcal, 38g Protein, 42g Carbs, 11g Lipids).
-  - OneMap ActiveSG Smart Court Reservation (Kallang Tennis Centre Court 03, bot auto-sniped 0.42s latency, ActiveSG wallet S$42.50).
-  - Smart Dispenser Kiosk State (Changi City Point Hub Locker Pod #04, 65°C heated, 14.8s prep, NFC tap unlatch).
-- **Singapore Trust Strip**: SFA Compliant Grade A, HPB Nutri-Grade A & B, OneMap GIS, ActiveSG Grid (48 stadium clusters).
-- **Four Pillars Architecture**: Precision Fuel (Cloud Kitchens), ActiveSG Bot Integration, Computer Vision AI Meal Scan, Dual-Zone Thermal Hardware.
-- **Interactive Recovery Calculator**: Discipline selector (Badminton, Running 10K, Heavy Gym Lifting, Lap Swimming) dynamically updating meal specs, electrolytes, temperature, kiosk pickup pod, and interactive pre-order action.
-- **Membership Tiers**: Community Member (S$0 PAYG), Consumer Athlete Pass (S$89/mo - Priority), Pro Academy / Club (S$1,000/mo).
-
-### B. Nutrition & Meals Screen (`#nutrition-and-meals`)
-- **Headline**: "Precision fuel. Verified by science."
-- **Dietary Filter Segment**: All Recovery Meals, High Protein (Post-HIIT), Low GI Endurance, Plant-Powered, Senior Vitality & Active Aging.
-- **Bento Menu**:
-  - *Sous-vide Miso Salmon & Forbidden Rice* ($12.50, 42g Protein, 520 kcal, 48g Carbs, macro donut micro-chart).
-  - *Citrus Herb Grilled Chicken & Mash* ($11.80, HPB Healthier Choice, 38g Protein, 480 kcal).
-  - *Tempeh & Edamame Quinoa Power Bowl* ($10.90, 100% Plant-Based, 28g Plant Protein, 440 kcal).
-  - *Warm Bone Broth & Vitality Congee* ($9.80, Pioneer Pass $8.50, Active Aging, 26g Bio-Protein, 360 kcal, 12g Collagen, GI 48).
-- **Snap & Calculate Vision Engine**: Camera viewfinder simulation with live bounding boxes (Salmon Belly 99%, Forbidden Rice 41g Carb, 94% Recovery Index).
-- **Logistics Architecture**: Central cloud kitchens, sub-4°C cold chain, peak-hour replenishment drops.
-- **Promo Voucher Banner**: Code `PULSE-FIRST-SG` with 1-click copy and instant kiosk redemption.
-
-### C. Sports Venues Screen (`#sports-venues`)
-- **Headline**: "One app for every court, pitch, and gym in Singapore."
-- **Autonomous Auto-Booking Bot Deck**:
-  - Target discipline selector (Badminton, Tennis, Pickleball, Squash, Futsal).
-  - Venue Priority Ladder (Clementi Sports Hall, Jurong East Sports Complex, Bishan Sports Hall, Kallang Tennis Hub).
-  - Singpass / MyActiveSG wallet auto-debit profile ($9.70/slot + $1.80 commission only on win).
-  - "Arm Bot for Tomorrow 7 AM" with interactive state transitions and telemetry graph.
-- **OneMap Singapore GIS Canvas**:
-  - Interactive map canvas with geolocation pins across Singapore.
-  - Venue detail drawer with real-time court vacancy (18:00–21:00) and on-site Smart Dispenser stock.
-- **Community Sparring & Allied Health**:
-  - Open sparring match joiners (West Coast Smashers).
-  - Certified AHPC Physio mobile pod bookings (Kenneth Koh, PT).
-  - Community dawn running sessions (Marina Bay Waterfront 7.5KM).
-
-### D. Smart Dispensers Screen (`#smart-dispensers`)
-- **Kiosk Network Explorer**: Searchable directory of 48 active pods island-wide.
-- **Dual-Zone Hardware Telemetry**: Live temperature gauges (Cryo Chilled 3.8°C–4.1°C, Thermal Hot 64.8°C–65.4°C).
-- **Interactive Door Unlatch**: NFC tap and QR scan simulation with 15-second safety relatch countdown.
-
-### E. For Partners Screen (`#for-partners`)
-- **Stakeholder Opportunities**: Facility Operators (zero CAPEX, 15-22% net share), Clinical Telehealth Network (70% consultation share + 4% formulation royalty), Culinary Cloud Kitchens (800-2,500 units guaranteed, 10% protocol fee), Institutional Grants (PSG compatible, National Steps Challenge API).
-- **Interactive BCM Revenue Model**: 4 interactive tabs showing unit economics and cohort breakdowns.
-- **Multi-Step Onboarding Pipeline**: Step 1 (Organization), Step 2 (Requirements & Scale), Step 3 (Confirmation).
-
----
-
-## 3. Technology Stack & Architecture
-
-- **Frontend**: React 19, TypeScript, Tailwind CSS v4, Motion, Lucide icons & Google Material Symbols Outlined.
-- **Typography**: Inter (Google Fonts) with San Francisco optical tracking.
-- **Backend / API**: Express full-stack entrypoint (`server.ts`) mounting Vite middleware in development and static assets in production.
-- **MCP Integration**:
-  - Monitored MCP Server: `https://mcp.smithery.ai/lewislikun`
-  - Health Endpoint: `/api/health.js` and `/api/health`
-  - MCP Tool Gateway: `/api/mcp.js` (tools: `activesg_book_court`, `calculate_recovery_macros`, `dispenser_claim_locker`)
-  - Real-time client status modal inspectable from navigation header and footer.
-- **Version Control & Remote**:
-  - Repository: `https://github.com/lewislikun-ux/pulsenutri.git`
-  - Default Branch: `main`
-  - Tracking protocol: Automatically update `masterprompt.md`, `build/error.md`, and `logs.md` upon every git push.
+CONTEXT:
+ - Hosted and previewed in Google AI Studio Build and deployed to GitHub: https://github.com/lewislikun-ux/pulsenutri.git (branch: main).
+ - MCP Gateway: Smithery.ai endpoint at https://mcp.smithery.ai/lewislikun.
+ - Real response from /api/health.js:
+```json
+{
+  "status": "healthy",
+  "service": "PulseNutri Ecosystem & Smithery MCP Gateway",
+  "timestamp": "2026-10-08T02:32:43.898Z",
+  "mcp": {
+    "endpoint": "https://mcp.smithery.ai/lewislikun",
+    "reachable": true,
+    "httpStatus": 405,
+    "latencyMs": 393,
+    "error": null,
+    "protocol": "Model Context Protocol (MCP v1.0)",
+    "connectedServices": [
+      "ActiveSG Court Booking Bot Grid",
+      "HPB Nutri-Grade Nutrient Engine",
+      "OneMap Singapore GIS Geospatial",
+      "Singpass Biometric Verification Token",
+      "Smart Thermal Kiosk IoT Dispenser Network"
+    ]
+  },
+  "system": {
+    "uptimeSeconds": 142.8,
+    "environment": "development",
+    "version": "1.2.0"
+  }
+}
+```
